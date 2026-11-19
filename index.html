@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="UEWC — Unmatched Ego World Cup">
+<title>UEWC — Unmatched Ego World Cup</title>
+<style>
+:root{
+  --bg:#0b1422;--surface:#111e30;--surface-soft:#15253a;
+  --line:#22344b;--text:#edf4ff;--muted:#9aabc0;
+  --blue:#398bff;--blue-soft:#173c68;--max:1080px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font:15px/1.6 Inter,system-ui,-apple-system,Segoe UI,Arial,sans-serif}
+a{color:inherit;text-decoration:none}
+.wrap{width:min(var(--max),calc(100% - 40px));margin:auto}
+header{height:68px;border-bottom:1px solid var(--line);background:rgba(11,20,34,.96)}
+.nav{height:100%;display:flex;align-items:center;justify-content:space-between;gap:24px}
+.logo{font-size:20px;font-weight:850;letter-spacing:1.5px}
+.logo span{color:var(--blue)}
+nav{display:flex;gap:26px;color:var(--muted);font-size:13px}
+nav a:hover{color:var(--text)}
+.hero{padding:76px 0 58px;border-bottom:1px solid var(--line)}
+.kicker{color:#75b3ff;text-transform:uppercase;letter-spacing:2px;font-size:11px;font-weight:750}
+.hero-inner{display:grid;grid-template-columns:1.3fr .7fr;align-items:center;gap:40px}
+h1{font-size:clamp(38px,6vw,64px);line-height:1.05;letter-spacing:-2.5px;margin:13px 0 16px}
+h1 span{color:#70adff}
+.intro{max-width:540px;color:var(--muted);font-size:16px;margin:0}
+.hero-actions{display:flex;gap:11px;margin-top:25px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;padding:10px 16px;border-radius:7px;background:var(--blue);font-size:13px;font-weight:700;color:white}
+.btn.ghost{background:transparent;border:1px solid var(--line);color:var(--text)}
+.event{border:1px solid var(--line);border-radius:12px;background:var(--surface);padding:22px}
+.event-top{display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:1px}
+.event-mark{width:54px;height:54px;border-radius:12px;background:var(--blue-soft);display:grid;place-items:center;font-size:27px;margin:24px 0 15px}
+.event h2{font-size:21px;margin:0 0 4px}
+.event p{color:var(--muted);font-size:13px;margin:0}
+section{padding:43px 0}
+.section-title{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:18px}
+.section-title h2{font-size:21px;letter-spacing:-.4px;margin:0}
+.section-title p{color:var(--muted);font-size:13px;margin:4px 0 0}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px;min-height:132px}
+.card-icon{width:34px;height:34px;border-radius:8px;background:var(--blue-soft);display:grid;place-items:center;font-size:17px;margin-bottom:14px}
+.card h3{font-size:15px;margin:0 0 4px}
+.card p{font-size:13px;color:var(--muted);margin:0}
+.rules{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px;color:var(--muted);font-size:13px}
+footer{border-top:1px solid var(--line);padding:22px 0;color:var(--muted);font-size:12px}
+.footer-inner{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+@media(max-width:700px){
+ .wrap{width:min(100% - 32px,var(--max))}
+ header{height:auto}.nav{padding:16px 0;align-items:flex-start;flex-direction:column;gap:12px}
+ nav{gap:18px;flex-wrap:wrap}
+ .hero{padding:52px 0 40px}.hero-inner{grid-template-columns:1fr;gap:28px}
+ h1{letter-spacing:-1.7px}.event{max-width:440px}
+ .cards{grid-template-columns:1fr}.card{min-height:unset}
+ section{padding:34px 0}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap nav">
+    <a class="logo" href="#home">UE<span>WC</span></a>
+    <nav aria-label="Main navigation">
+      <a href="#home">Home</a><a href="#competition">Competition</a><a href="#statistics">Statistics</a><a href="#rules">Rules</a>
+    </nav>
+  </div>
+</header>
+<main>
+  <section class="hero" id="home">
+    <div class="wrap hero-inner">
+      <div>
+        <div class="kicker">Unmatched Ego World Cup</div>
+        <h1>International<br><span>football starts here.</span></h1>
+        <p class="intro">Follow the national teams, match results and standout players competing for the UEWC title.</p>
+        <div class="hero-actions">
+          <a class="btn" href="#competition">View competition</a>
+          <a class="btn ghost" href="#rules">Read the rules</a>
+        </div>
+      </div>
+      <aside class="event">
+        <div class="event-top"><span>UEWC</span><span>Every two months</span></div>
+        <div class="event-mark">🏆</div>
+        <h2>The World Cup</h2>
+        <p>One tournament. One champion.</p>
+      </aside>
+    </div>
+  </section>
+
+  <section id="competition">
+    <div class="wrap">
+      <div class="section-title"><div><h2>Competition</h2><p>Everything happening across the tournament.</p></div></div>
+      <div class="cards">
+        <article class="card"><div class="card-icon">🌍</div><h3>National teams</h3><p>View participating countries and their squads.</p></article>
+        <article class="card"><div class="card-icon">📅</div><h3>Fixtures & results</h3><p>Check upcoming matches and completed games.</p></article>
+        <article class="card"><div class="card-icon">📊</div><h3>Standings</h3><p>Follow group tables and qualification progress.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section id="statistics">
+    <div class="wrap">
+      <div class="section-title"><div><h2>Player statistics</h2><p>Recognising performances on the pitch.</p></div></div>
+      <div class="cards">
+        <article class="card"><div class="card-icon">⚽</div><h3>Top scorers</h3><p>Goals scored throughout the competition.</p></article>
+        <article class="card"><div class="card-icon">🧤</div><h3>Top saves</h3><p>Goalkeeper saves and clean-sheet records.</p></article>
+        <article class="card"><div class="card-icon">🎯</div><h3>Assists</h3><p>Players creating chances and goals.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section id="rules">
+    <div class="wrap">
+      <div class="section-title"><div><h2>Official rules</h2><p>Competition information in one place.</p></div></div>
+      <div class="rules">The official UEWC regulations will be published here. Follow the UEWC Discord announcements for confirmed updates.</div>
+    </div>
+  </section>
+</main>
+<footer><div class="wrap footer-inner"><span>© UEWC — Unmatched Ego World Cup</span><span>International glory. One champion.</span></div></footer>
+</body>
+</html>
