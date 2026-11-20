@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#07152d">
+<title>UEWC | Unmatched Ego World Cup</title>
+
+<style>
+:root{
+--bg:#061226;--panel:#0d2040;--panel2:#10284d;
+--blue:#3685ff;--cyan:#61c8ff;
+--text:#f4f7ff;--muted:#9aacc9;--line:#20395f;
+}
+*{box-sizing:border-box}
+body{
+margin:0;background:radial-gradient(circle at 80% 0%,#12366b 0,transparent 32%),var(--bg);
+color:var(--text);font-family:Inter,system-ui,Arial,sans-serif;
+overflow-x:hidden;
+}
+header{
+position:sticky;top:0;z-index:5;background:#061226ef;
+backdrop-filter:blur(16px);border-bottom:1px solid var(--line)
+}
+.nav{
+max-width:1100px;margin:auto;padding:14px 20px;
+display:flex;align-items:center;justify-content:space-between;gap:14px
+}
+.brand{font-weight:900;letter-spacing:1.5px;white-space:nowrap}
+.brand span{color:var(--cyan)}
+nav{display:flex;gap:5px;flex-wrap:wrap}
+nav button{
+background:transparent;color:var(--muted);border:0;
+padding:9px 10px;border-radius:10px;font-weight:700;cursor:pointer
+}
+nav button.active,nav button:hover{background:#17345e;color:white}
+main{max-width:1100px;margin:auto;padding:30px 20px 70px}
+.page{display:none;animation:fade .3s ease}
+.page.active{display:block}
+@keyframes fade{
+from{opacity:0;transform:translateY(9px)}
+to{opacity:1;transform:translateY(0)}
+}
+.hero{
+padding:52px 30px;border:1px solid #244a7e;border-radius:24px;
+background:linear-gradient(120deg,#102d57,#0a1a34 65%);
+position:relative;overflow:hidden
+}
+.eyebrow{color:var(--cyan);font-weight:800;letter-spacing:2px;font-size:12px}
+.hero h1{font-size:clamp(36px,7vw,66px);line-height:1.02;margin:14px 0}
+.hero p{color:var(--muted);max-width:590px;line-height:1.7}
+.hero:after{
+content:"UEWC";position:absolute;right:-10px;bottom:-32px;
+font-size:clamp(80px,18vw,190px);font-weight:1000;
+color:#ffffff08;pointer-events:none
+}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}
+.stat,.card{
+background:linear-gradient(145deg,var(--panel2),var(--panel));
+border:1px solid var(--line);border-radius:17px;padding:18px
+}
+.stat strong{display:block;font-size:25px}
+.stat small,.muted{color:var(--muted)}
+.section-title{margin:32px 0 14px;font-size:23px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.nation{display:flex;gap:13px;align-items:flex-start}
+.flag{font-size:32px;line-height:1.2}
+.nation h3{margin:0 0 5px}
+.nation p{margin:0;color:var(--muted);font-size:14px;line-height:1.6}
+.tag{
+display:inline-block;margin-top:10px;padding:5px 9px;
+border-radius:8px;background:#18365f;color:#9ccaff;
+font-size:11px;font-weight:800;letter-spacing:.6px
+}
+.group{margin-bottom:18px}
+.group-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.group-head h3{margin:0}
+.teamline{
+display:flex;justify-content:space-between;gap:10px;
+padding:11px 0;border-bottom:1px solid var(--line)
+}
+.teamline:last-child{border:0}
+.matchday{margin:18px 0}
+.matchday h3{color:var(--cyan)}
+.fixture{
+display:flex;justify-content:space-between;align-items:center;
+gap:10px;padding:15px 0;border-bottom:1px solid var(--line)
+}
+.fixture:last-child{border:0}
+.fixture b{font-size:14px}
+.fixture span{color:var(--muted);font-size:12px}
+.note{
+border:1px solid #244a7e;background:#0b1d39;
+padding:15px;border-radius:13px;color:var(--muted);line-height:1.6
+}
+.rule{padding:15px 0;border-bottom:1px solid var(--line);line-height:1.6}
+.rule strong{color:#dbeaff}
+footer{
+border-top:1px solid var(--line);padding:24px 20px;
+text-align:center;color:var(--muted);font-size:12px;letter-spacing:1.3px
+}
+
+/* Discord counter */
+.discord-card{
+margin-top:20px;padding:20px;border:1px solid #355d91;
+border-radius:18px;background:linear-gradient(130deg,#102d57,#091a34);
+display:flex;justify-content:space-between;align-items:center;gap:15px
+}
+.discord-card h3{margin:0 0 6px}
+.discord-card p{margin:0;color:var(--muted);font-size:13px}
+.member-number{font-size:30px;font-weight:950;color:var(--cyan)}
+.member-label{font-size:11px;color:var(--muted);text-align:right}
+.discord-button{
+display:inline-block;margin-top:13px;padding:9px 14px;
+background:#3685ff;color:white;text-decoration:none;
+border-radius:10px;font-weight:800;font-size:12px
+}
+
+/* Mystery challenge */
+.mystery-card{
+margin:20px 0 4px;padding:22px;border:1px solid #367bd0;
+border-radius:20px;background:linear-gradient(130deg,#102f5c,#0a1b36);
+text-align:center;position:relative;overflow:hidden
+}
+.mystery-card p{
+color:var(--muted);line-height:1.6;margin:8px auto 15px;max-width:520px
+}
+.mystery-cta{
+position:relative;z-index:1;display:inline-flex;align-items:center;gap:13px;
+padding:10px 20px 10px 10px;border:1px solid #68caff88;
+border-radius:18px;background:#0a1a34;color:white;font-weight:850;
+cursor:pointer;box-shadow:0 0 22px #3685ff55
+}
+.question-mark{
+display:grid;place-items:center;width:58px;height:58px;
+border-radius:14px;background:linear-gradient(145deg,#4ba5ff,#1760d5);
+font-size:36px;font-weight:950
+}
+.cta-copy{text-align:left}
+.cta-copy small{display:block;color:#a9c9ef;font-weight:600;margin-top:4px}
+.cta-arrow{font-size:25px;color:var(--cyan)}
+.unlocked-label{
+display:inline-block;color:#8fe7bd;font-weight:850;
+letter-spacing:1px;margin-top:8px
+}
+
+/* Standings */
+.table-wrap{
+overflow-x:auto;border:1px solid var(--line);
+border-radius:15px;background:#0b1d39;margin:14px 0 24px
+}
+.standings{
+width:100%;border-collapse:collapse;min-width:540px;
+text-align:center;font-size:13px
+}
+.standings th{
+padding:14px 10px;background:#142e53;color:#9ecfff;
+font-size:11px;letter-spacing:.7px
+}
+.standings td{padding:14px 10px;border-bottom:1px solid var(--line)}
+.standings tr:last-child td{border-bottom:0}
+.standings td:first-child{text-align:left;font-weight:800}
+.standings .points{color:var(--cyan);font-weight:900;font-size:15px}
+.standings .team{display:flex;align-items:center;gap:9px;white-space:nowrap}
+.group-label{
+display:flex;justify-content:space-between;align-items:center;margin-top:28px
+}
+.table-note{color:var(--muted);font-size:12px}
+
+/* Challenge overlay */
+.mystery-overlay{
+position:fixed;inset:0;z-index:20;display:none;place-items:center;
+padding:18px;background:#020817ef;backdrop-filter:blur(12px)
+}
+.mystery-overlay.open{display:grid}
+.game-panel{
+width:min(100%,520px);max-height:94vh;overflow:auto;
+padding:24px;border:1px solid #3978c2;border-radius:22px;
+background:linear-gradient(145deg,#102b52,#07152b);
+box-shadow:0 20px 80px #0009;text-align:center;position:relative
+}
+.game-panel h2{margin:7px 0 8px;font-size:26px}
+.game-panel p{color:var(--muted);line-height:1.55}
+.game-close{
+position:absolute;right:12px;top:12px;width:36px;height:36px;
+border:1px solid #35577e;border-radius:10px;
+background:#10284d;color:white;font-size:20px;cursor:pointer
+}
+.game-progress{font-weight:800;color:var(--cyan);margin:12px 0}
+.memory-board{
+display:grid;grid-template-columns:repeat(3,1fr);gap:10px;
+width:min(100%,300px);margin:18px auto;padding:12px;
+border:1px solid #2a4d78;border-radius:17px;
+background:radial-gradient(circle at center,#153c70,#07152b 75%)
+}
+.memory-tile{
+aspect-ratio:1;border:1px solid #426a9a;border-radius:12px;
+background:linear-gradient(145deg,#17365f,#0a1b35);
+cursor:pointer;transition:background .14s,transform .14s
+}
+.memory-tile.lit{
+background:linear-gradient(145deg,#b9ecff,#3685ff 65%,#1450b7);
+box-shadow:0 0 18px #61c8ff,0 0 28px #3685ff88;
+transform:scale(.96);border-color:#b7edff
+}
+.game-action{
+border:0;border-radius:12px;padding:12px 20px;
+background:linear-gradient(100deg,#3685ff,#1d62d5);
+color:white;font-weight:850;cursor:pointer
+}
+.reveal-fixtures{
+margin-top:18px;min-height:260px;text-align:left;
+border:1px solid #315d91;border-radius:14px;padding:12px;background:#091a33
+}
+@media(prefers-reduced-motion:reduce){
+*,*:before,*:after{animation-duration:.01ms!important;scroll-behavior:auto!important}
+}
+@media(max-width:600px){
+.nav{align-items:flex-start;flex-direction:column}
+nav{width:100%;overflow-x:auto;flex-wrap:nowrap}
+nav button{white-space:nowrap}
+.hero{padding:35px 22px}
+.stats{grid-template-columns:1fr}
+.fixture{align-items:flex-start;flex-direction:column}
+.mystery-cta{max-width:100%;gap:9px;padding-right:12px}
+.question-mark{width:52px;height:52px}
+.game-panel{padding:20px 15px}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<div class="nav">
+<div class="brand">UE<span>WC</span> <small style="color:#91a8cb;font-weight:600">/ WORLD CUP</small></div>
+<nav aria-label="Main navigation">
+<button class="active" data-page="home">Home</button>
+<button data-page="teams">Nations</button>
+<button data-page="groups">Groups</button>
+<button data-page="standings">Standings</button>
+<button data-page="fixtures">Fixtures</button>
+<button data-page="rules">Rules</button>
+</nav>
+</div>
+</header>
+
+<main>
+
+<!-- HOME -->
+<section class="page active" id="home">
+<div class="hero">
+<div class="eyebrow">UNMATCHED EGO • INTERNATIONAL COMPETITION</div>
+<h1>THE WORLD<br><span style="color:var(--cyan)">IS YOURS.</span></h1>
+<p>Eight nations. Two groups. One champion. Follow the Unmatched Ego World Cup right here.</p>
+</div>
+
+<!-- DISCORD MEMBERS -->
+<div class="discord-card">
+<div>
+<h3>UEWC Community</h3>
+<p>Join the official tournament community.</p>
+<a class="discord-button" href="https://discord.gg/8XqWmpE6sz" target="_blank">JOIN DISCORD ↗</a>
+</div>
+<div>
+<div class="member-number" id="memberCount">...</div>
+<div class="member-label" id="memberStatus">LOADING MEMBERS</div>
+</div>
+</div>
+
+<!-- MYSTERY CHALLENGE -->
+<div class="mystery-card">
+<div class="eyebrow">EXCLUSIVE MATCHDAY REVEAL</div>
+<h2 style="margin:9px 0 0">A surprise is waiting...</h2>
+<p>Beat the memory challenge and unlock the Matchday 1 fixtures.</p>
+<button class="mystery-cta" id="openMystery">
+<span class="question-mark">?</span>
+<span class="cta-copy">TAP TO UNLOCK<small>Complete the challenge to reveal Matchday 1</small></span>
+<span class="cta-arrow">↓</span>
+</button>
+<div id="unlockedStatus" class="unlocked-label" hidden>✓ MATCHDAY 1 UNLOCKED</div>
+</div>
+
+<div class="stats">
+<div class="stat"><strong>08</strong><small>Qualified nations</small></div>
+<div class="stat"><strong>02</strong><small>Groups</small></div>
+<div class="stat"><strong>12</strong><small>Group-stage matches</small></div>
+</div>
+
+<h2 class="section-title">Tournament status</h2>
+<div class="note">UEWC has not started yet. All nations begin with zero points. Results and player statistics will be updated after matches are played.</div>
+
+<h2 class="section-title">The nations</h2>
+<div class="grid">
+<div class="card nation"><div class="flag">🇫🇷</div><div><h3>France</h3><p>Manager: Eren &amp; Rusue</p></div></div>
+<div class="card nation"><div class="flag">🇹🇷</div><div><h3>Türkiye</h3><p>Manager: Semih's Dad</p></div></div>
+<div class="card nation"><div class="flag">🇲🇦</div><div><h3>Morocco</h3><p>Managers: Arson &amp; Black Flames</p></div></div>
+<div class="card nation"><div class="flag">🇯🇵</div><div><h3>Japan</h3><p>Managers: Schezen &amp; Trolling X</p></div></div>
+<div class="card nation"><div class="flag">🏳️</div><div><h3>TRNC</h3><p>Manager: DA</p></div></div>
+<div class="card nation"><div class="flag">🇪🇸</div><div><h3>Spain</h3><p>Manager: Melvin</p></div></div>
+<div class="card nation"><div class="flag">🇵🇹</div><div><h3>Portugal</h3><p>Managers: Ray &amp; XENO</p></div></div>
+<div class="card nation"><div class="flag">🇪🇬</div><div><h3>Egypt</h3><p>Manager: Shaههer</p></div></div>
+</div>
+</section>
+
+<!-- NATIONS -->
+<section class="page" id="teams">
+<div class="eyebrow">THE REPRESENTATIVES</div>
+<h1 class="section-title" style="font-size:34px;margin-top:8px">Nations &amp; Managers</h1>
+<p class="muted">Meet the eight nations competing in UEWC and their confirmed managers.</p>
+<div class="grid">
+<div class="card nation"><div class="flag">🇫🇷</div><div><h3>France</h3><p>Eren &amp; Rusue</p><span class="tag">GROUP A</span></div></div>
+<div class="card nation"><div class="flag">🇹🇷</div><div><h3>Türkiye</h3><p>Semih's Dad</p><span class="tag">GROUP A</span></div></div>
+<div class="card nation"><div class="flag">🇲🇦</div><div><h3>Morocco</h3><p>Arson &amp; Black Flames</p><span class="tag">GROUP A</span></div></div>
+<div class="card nation"><div class="flag">🇯🇵</div><div><h3>Japan</h3><p>Schezen &amp; Trolling X</p><span class="tag">GROUP A</span></div></div>
+<div class="card nation"><div class="flag">🏳️</div><div><h3>TRNC</h3><p>DA</p><span class="tag">GROUP B</span></div></div>
+<div class="card nation"><div class="flag">🇪🇸</div><div><h3>Spain</h3><p>Melvin</p><span class="tag">GROUP B</span></div></div>
+<div class="card nation"><div class="flag">🇵🇹</div><div><h3>Portugal</h3><p>Ray &amp; XENO</p><span class="tag">GROUP B</span></div></div>
+<div class="card nation"><div class="flag">🇪🇬</div><div><h3>Egypt</h3><p>Shaههer</p><span class="tag">GROUP B</span></div></div>
+</div>
+</section>
+
+<!-- GROUPS -->
+<section class="page" id="groups">
+<div class="eyebrow">ROAD TO THE FINAL</div>
+<h1 class="section-title" style="font-size:34px;margin-top:8px">Group Stage</h1>
+<div class="grid">
+<div class="card group">
+<div class="group-head"><h3>GROUP A</h3><span class="tag">4 NATIONS</span></div>
+<div class="teamline"><b>🇫🇷 France</b><span class="muted">Eren &amp; Rusue</span></div>
+<div class="teamline"><b>🇹🇷 Türkiye</b><span class="muted">Semih's Dad</span></div>
+<div class="teamline"><b>🇲🇦 Morocco</b><span class="muted">Arson &amp; Black Flames</span></div>
+<div class="teamline"><b>🇯🇵 Japan</b><span class="muted">Schezen &amp; Trolling X</span></div>
+</div>
+<div class="card group">
+<div class="group-head"><h3>GROUP B</h3><span class="tag">4 NATIONS</span></div>
+<div class="teamline"><b>🏳️ TRNC</b><span class="muted">DA</span></div>
+<div class="teamline"><b>🇪🇸 Spain</b><span class="muted">Melvin</span></div>
+<div class="teamline"><b>🇵🇹 Portugal</b><span class="muted">Ray &amp; XENO</span></div>
+<div class="teamline"><b>🇪🇬 Egypt</b><span class="muted">Shaههer</span></div>
+</div>
+</div>
+<div class="note">Each nation plays the other three nations in its group. Every team plays three group-stage matches.</div>
+</section>
+
+<!-- STANDINGS -->
+<section class="page" id="standings">
+<div class="eyebrow">THE RACE FOR GLORY</div>
+<h1 class="section-title" style="font-size:34px;margin-top:8px">Tournament Standings</h1>
+<p class="muted">The official group tables. All statistics start at zero before kickoff.</p>
+
+<div class="group-label"><h2>GROUP A</h2><span class="tag">4 NATIONS</span></div>
+<div class="table-wrap">
+<table class="standings">
+<thead><tr><th>#</th><th>TEAM</th><th>MP</th><th>W</th><th>D</th><th>L</th><th>GF</th><th>GA</th><th>GD</th><th>PTS</th></tr></thead>
+<tbody>
+<tr><td>1</td><td><div class="team">🇫🇷 France</div></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="points">0</td></tr>
+<tr><td>2</td><td><div class="team">🇹🇷 Türkiye</div></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="points">0</td></tr>
+<tr><td>3</td><td><div class="team">🇲🇦 Morocco</div></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="points">0</td></tr>
+<tr><td>4</td><td><div class="team">🇯🇵 Japan</div></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="points">0</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="group-label"><h2>GROUP B</h2><span class="tag">4 NATIONS</span></div>
+<div class="table-wrap">
+<table class="standings">
+<thead><tr><th>#</th><th>TEAM</th><th>MP</th><th>W</th><th>D</th><th>L</th><th>GF</th><th>GA</th><th>GD</th><th>PTS</th></tr></thead>
+<tbody>
+<tr><td>1</td><td><div class="team">🏳️ TRNC</div></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="points">0</td></tr>
+<tr><td>2</td><td><div class="team">🇪🇸 Spain</div></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="points">0</td></tr>
+<tr><td>3</td><td><div class="team">🇵🇹 Portugal</div></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="points">0</td></tr>
+<tr><td>4</td><td><div class="team">🇪🇬 Egypt</div></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="points">0</td></tr>
+</tbody>
+</table>
+</div>
+<p class="table-note">MP: Matches Played · GF: Goals For · GA: Goals Against · GD: Goal Difference · PTS: Points</p>
+<div class="note">All teams are currently level on zero points. Standings will be updated as official results are confirmed.</div>
+</section>
+
+<!-- FIXTURES -->
+<section class="page" id="fixtures">
+<div class="eyebrow">UPCOMING MATCHES</div>
+<h1 class="section-title" style="font-size:34px;margin-top:8px">Group Fixtures</h1>
+<p class="muted">Matchday 1 fixtures are revealed through the challenge.</p>
+<div class="card matchday" id="matchday1" hidden>
+<h3>MATCHDAY 1</h3>
+<div class="fixture"><b>🇫🇷 France <span>vs</span> 🇹🇷 Türkiye</b><span>GROUP A • UPCOMING</span></div>
+<div class="fixture"><b>🇲🇦 Morocco <span>vs</span> 🇯🇵 Japan</b><span>GROUP A • UPCOMING</span></div>
+<div class="fixture"><b>🏳️ TRNC <span>vs</span> 🇪🇸 Spain</b><span>GROUP B • UPCOMING</span></div>
+<div class="fixture"><b>🇵🇹 Portugal <span>vs</span> 🇪🇬 Egypt</b><span>GROUP B • UPCOMING</span></div>
+</div>
+</section>
+
+<!-- RULES -->
+<section class="page" id="rules">
+<div class="eyebrow">FAIR PLAY • DISCIPLINE • COMPETITION</div>
+<h1 class="section-title" style="font-size:34px;margin-top:8px">In-Game Rules</h1>
+<div class="card">
+<div class="rule"><strong>01 • Gameplay violations</strong><br>
+Using GK TP: -1<br>
+Saving a shot using GK TP: -2<br>
+Using double shots: -1<br>
+Scoring with double shots: -2<br>
+Using the pass button / lob shots: -1<br>
+Scoring using the pass button / lob shots: -2<br>
+Tackling the goalkeeper inside the box: -1<br>
+Tackling the goalkeeper and causing a goal inside the box: -2<br>
+Blocking the goalkeeper inside the box: -1<br>
+Using Awakening inside the opponent's box: -1<br>
+Abusing bugs or glitches: -1</div>
+
+<div class="rule"><strong>02 • Delay policy</strong><br>
+Each team is allowed a 20-minute delay or a 1-day delay.<br>
+Maximum 2 delays per match.<br>
+If a team is 20 minutes late, it receives FFT (Forfeit).</div>
+
+<div class="rule"><strong>03 • FFT stat allocation</strong><br>
+Goals: 3 • Assists: 3 • Tackles: 7 • Saves: 5</div>
+
+<div class="rule"><strong>04 • Recording &amp; AFK</strong><br>
+Failure to provide a recording: -2<br>
+AFK for 25 seconds: -1<br>
+Players must leave the match if AFK.<br>
+Faking AFK: -2.</div>
+
+<div class="rule"><strong>05 • Match etiquette</strong><br>
+Asking for a pause by saying “Sorry” then continuing to play: -2<br>
+Players must say “Nice” and allow everyone to get into respective positions before restarting.<br>
+Stealing kickoff or starting from opponent's half: -1.</div>
+
+<div class="rule"><strong>06 • Match statistics</strong><br>
+Screenshots of match stats must be taken after every match.<br>
+Without screenshot, no players receive match statistics.</div>
+</div>
+</section>
+
+</main>
+
+<footer>UEWC | FAIR PLAY • DISCIPLINE • COMPETITION</footer>
+
+<!-- MEMORY CHALLENGE -->
+<div class="mystery-overlay" id="mysteryOverlay" role="dialog" aria-modal="true">
+<div class="game-panel">
+<button class="game-close" id="closeMystery">×</button>
+<div class="eyebrow">UEWC SECRET CHALLENGE</div>
+<h2>The Memory Test</h2>
+<p id="gameInstruction">Watch the blue tiles carefully, then repeat the sequence in the correct order. Three rounds stand between you and Matchday 1.</p>
+<div class="game-progress" id="gameProgress">ROUND 1 / 3</div>
+
+<div class="memory-board">
+<button class="memory-tile" data-tile="0"></button>
+<button class="memory-tile" data-tile="1"></button>
+<button class="memory-tile" data-tile="2"></button>
+<button class="memory-tile" data-tile="3"></button>
+<button class="memory-tile" data-tile="4"></button>
+<button class="memory-tile" data-tile="5"></button>
+<button class="memory-tile" data-tile="6"></button>
+<button class="memory-tile" data-tile="7"></button>
+<button class="memory-tile" data-tile="8"></button>
+</div>
+
+<button class="game-action" id="startGame">START MEMORY TEST</button>
+<p style="font-size:12px">Each round gets harder. One wrong tap resets the current round.</p>
+
+<div id="revealArea" class="reveal-fixtures" hidden>
+<div id="fixtureContent" hidden>
+<h3 style="color:var(--cyan);text-align:center">MATCHDAY 1 — UNLOCKED</h3>
+<div class="fixture"><b>🇫🇷 France vs 🇹🇷 Türkiye</b><span>GROUP A</span></div>
+<div class="fixture"><b>🇲🇦 Morocco vs 🇯🇵 Japan</b><span>GROUP A</span></div>
+<div class="fixture"><b>🏳️ TRNC vs 🇪🇸 Spain</b><span>GROUP B</span></div>
+<div class="fixture"><b>🇵🇹 Portugal vs 🇪🇬 Egypt</b><span>GROUP B</span></div>
+<p style="text-align:center;color:#8fe7bd;font-weight:800">THE ROAD TO THE FINAL BEGINS.</p>
+<button class="game-action" id="closeAfterReveal">VIEW FIXTURES</button>
+</div>
+</div>
+</div>
+</div>
+
+<script>
+// PAGE NAVIGATION
+const buttons=[...document.querySelectorAll('nav button')];
+const pages=[...document.querySelectorAll('.page')];
+
+let currentPage=0;
+const pageNames=['home','teams','groups','standings','fixtures','rules'];
+
+function playNavSound(){
+try{
+const C=window.AudioContext||window.webkitAudioContext;
+if(!C)return;
+const ctx=new C();
+const osc=ctx.createOscillator();
+const gain=ctx.createGain();
+osc.type='sine';
+osc.frequency.setValueAtTime(620,ctx.currentTime);
+osc.frequency.exponentialRampToValueAtTime(920,ctx.currentTime+.07);
+gain.gain.setValueAtTime(.0001,ctx.currentTime);
+gain.gain.exponentialRampToValueAtTime(.045,ctx.currentTime+.015);
+gain.gain.exponentialRampToValueAtTime(.0001,ctx.currentTime+.12);
+osc.connect(gain);
+gain.connect(ctx.destination);
+osc.start();
+osc.stop(ctx.currentTime+.13);
+osc.onended=()=>ctx.close();
+}catch(e){}
+}
+
+function showPage(index,playSound=true){
+if(index<0||index>=pageNames.length)return;
+currentPage=index;
+
+buttons.forEach((b,i)=>b.classList.toggle('active',i===index));
+pages.forEach(p=>p.classList.toggle('active',p.id===pageNames[index]));
+
+if(playSound)playNavSound();
+window.scrollTo({top:0,behavior:'smooth'});
+}
+
+buttons.forEach((b,i)=>{
+b.addEventListener('click',()=>showPage(i));
+});
+
+// SWIPE NAVIGATION
+let touchStartX=0;
+let touchStartY=0;
+
+document.addEventListener('touchstart',e=>{
+if(e.touches.length!==1)return;
+touchStartX=e.touches[0].clientX;
+touchStartY=e.touches[0].clientY;
+},{passive:true});
+
+document.addEventListener('touchend',e=>{
+if(e.changedTouches.length!==1)return;
+if(document.getElementById('mysteryOverlay').classList.contains('open'))return;
+
+const dx=e.changedTouches[0].clientX-touchStartX;
+const dy=e.changedTouches[0].clientY-touchStartY;
+
+if(Math.abs(dx)<65)return;
+if(Math.abs(dx)<Math.abs(dy)*1.3)return;
+
+if(dx<0){
+showPage(Math.min(currentPage+1,pageNames.length-1));
+}else{
+showPage(Math.max(currentPage-1,0));
+}
+},{passive:true});
+
+// DISCORD LIVE MEMBER COUNT
+async function updateMemberCount(){
+const count=document.getElementById('memberCount');
+const status=document.getElementById('memberStatus');
+
+try{
+const response=await fetch(
+'https://discord.com/api/v10/invites/8XqWmpE6sz?with_counts=true'
+);
+if(!response.ok)throw new Error('Discord API unavailable');
+
+const data=await response.json();
+const members=data.approximate_member_count;
+
+if(typeof members!=='number')throw new Error('Count unavailable');
+
+count.textContent=members.toLocaleString();
+status.textContent='TOTAL SERVER MEMBERS';
+}catch(e){
+count.textContent='—';
+status.textContent='COUNT TEMPORARILY UNAVAILABLE';
+}
+}
+
+updateMemberCount();
+setInterval(updateMemberCount,60000);
+
+// MEMORY CHALLENGE
+const unlockKey='uewc_matchday1_memory_pixel_v3';
+const overlay=document.getElementById('mysteryOverlay');
+const openMystery=document.getElementById('openMystery');
+const closeMystery=document.getElementById('closeMystery');
+const startGame=document.getElementById('startGame');
+const tiles=[...document.querySelectorAll('.memory-tile')];
+const progress=document.getElementById('gameProgress');
+const instruction=document.getElementById('gameInstruction');
+const revealArea=document.getElementById('revealArea');
+const fixtureContent=document.getElementById('fixtureContent');
+const unlockedStatus=document.getElementById('unlockedStatus');
+const matchday1=document.getElementById('matchday1');
+
+let round=0,sequence=[],inputIndex=0;
+let accepting=false,playToken=0,audioContext=null;
+
+const roundLengths=[3,5,7];
+
+function isUnlocked(){
+try{return localStorage.getItem(unlockKey)==='yes'}catch(e){return false}
+}
+
+function setUnlocked(){
+try{localStorage.setItem(unlockKey,'yes')}catch(e){}
+}
+
+function sound(freq=620,duration=.12,type='sine'){
+try{
+const C=window.AudioContext||window.webkitAudioContext;
+if(!C)return;
+if(!audioContext)audioContext=new C();
+if(audioContext.state==='suspended')audioContext.resume();
+const o=audioContext.createOscillator();
+const g=audioContext.createGain();
+o.type=type;
+o.frequency.setValueAtTime(freq,audioContext.currentTime);
+g.gain.setValueAtTime(.0001,audioContext.currentTime);
+g.gain.exponentialRampToValueAtTime(.1,audioContext.currentTime+.015);
+g.gain.exponentialRampToValueAtTime(.0001,audioContext.currentTime+duration);
+o.connect(g);
+g.connect(audioContext.destination);
+o.start();
+o.stop(audioContext.currentTime+duration+.02);
+}catch(e){}
+}
+
+function lightTile(index,duration=360){
+const tile=tiles[index];
+tile.classList.add('lit');
+sound(440+index*48,.13);
+setTimeout(()=>tile.classList.remove('lit'),duration);
+}
+
+function setTilesDisabled(disabled){
+tiles.forEach(t=>t.disabled=disabled);
+}
+
+function updateUnlockedUI(){
+if(isUnlocked()){
+openMystery.innerHTML=
+'<span class="question-mark">✓</span><span class="cta-copy">MATCHDAY 1 UNLOCKED<small>Tap to view the revealed fixtures</small></span><span class="cta-arrow">→</span>';
+unlockedStatus.hidden=false;
+matchday1.hidden=false;
+}else{
+matchday1.hidden=true;
+}
+}
+
+function resetGame(){
+playToken++;
+round=0;
+sequence=[];
+inputIndex=0;
+accepting=false;
+revealArea.hidden=true;
+fixtureContent.hidden=true;
+tiles.forEach(t=>{
+t.classList.remove('lit');
+t.disabled=true;
+});
+progress.textContent='ROUND 1 / 3';
+instruction.textContent='Memorise the glowing tile order.';
+startGame.hidden=false;
+startGame.disabled=false;
+startGame.textContent='START MEMORY TEST';
+}
+
+function showSequence(token){
+accepting=false;
+setTilesDisabled(true);
+inputIndex=0;
+progress.textContent='ROUND '+(round+1)+' / 3 • WATCH';
+instruction.textContent='Memorise the glowing tile order...';
+
+let i=0;
+const interval=setInterval(()=>{
+if(token!==playToken){
+clearInterval(interval);
+return;
+}
+if(i>=sequence.length){
+clearInterval(interval);
+setTimeout(()=>{
+if(token!==playToken)return;
+accepting=true;
+setTilesDisabled(false);
+progress.textContent='ROUND '+(round+1)+' / 3 • YOUR TURN';
+instruction.textContent='Now tap the tiles in the exact same order.';
+},350);
+return;
+}
+lightTile(sequence[i]);
+i++;
+},650);
+}
+
+function beginRound(){
+sequence=Array.from(
+{length:roundLengths[round]},
+()=>Math.floor(Math.random()*9)
+);
+showSequence(playToken);
+}
+
+function finishChallenge(){
+accepting=false;
+setTilesDisabled(true);
+setUnlocked();
+updateUnlockedUI();
+
+progress.textContent='ALL ROUNDS CLEARED ✓';
+instruction.textContent='Perfect memory. Your fixtures are unlocked!';
+startGame.hidden=true;
+revealArea.hidden=false;
+fixtureContent.hidden=false;
+
+sound(880,.18,'triangle');
+setTimeout(()=>sound(1175,.22,'triangle'),160);
+}
+
+function openChallenge(){
+overlay.classList.add('open');
+if(isUnlocked()){
+resetGame();
+progress.textContent='UNLOCKED';
+instruction.textContent='You have already completed the challenge. Here are your Matchday 1 fixtures.';
+startGame.hidden=true;
+revealArea.hidden=false;
+fixtureContent.hidden=false;
+return;
+}
+resetGame();
+}
+
+function closeChallenge(){
+overlay.classList.remove('open');
+playToken++;
+accepting=false;
+}
+
+openMystery.addEventListener('click',openChallenge);
+closeMystery.addEventListener('click',closeChallenge);
+
+document.getElementById('closeAfterReveal').addEventListener('click',()=>{
+closeChallenge();
+showPage(4);
+setTimeout(()=>{
+matchday1.scrollIntoView({behavior:'smooth',block:'center'});
+},150);
+});
+
+overlay.addEventListener('click',e=>{
+if(e.target===overlay)closeChallenge();
+});
+
+document.addEventListener('keydown',e=>{
+if(e.key==='Escape')closeChallenge();
+});
+
+startGame.addEventListener('click',()=>{
+if(isUnlocked()){
+openChallenge();
+return;
+}
+playToken++;
+startGame.hidden=true;
+beginRound();
+});
+
+tiles.forEach(tile=>tile.addEventListener('click',()=>{
+if(!accepting)return;
+
+const chosen=Number(tile.dataset.tile);
+
+if(chosen!==sequence[inputIndex]){
+accepting=false;
+setTilesDisabled(true);
+sound(170,.25,'sawtooth');
+instruction.textContent='Not quite. Try that round again — watch closely.';
+progress.textContent='ROUND '+(round+1)+' • TRY AGAIN';
+startGame.hidden=false;
+startGame.textContent='RETRY ROUND';
+return;
+}
+
+lightTile(chosen,180);
+inputIndex++;
+
+if(inputIndex===sequence.length){
+accepting=false;
+setTilesDisabled(true);
+sound(760,.14,'triangle');
+
+if(round===2){
+finishChallenge();
+}else{
+round++;
+progress.textContent='ROUND '+round+' CLEARED ✓';
+instruction.textContent='Round cleared. Get ready for the next sequence.';
+setTimeout(()=>{
+if(!overlay.classList.contains('open'))return;
+beginRound();
+},900);
+}
+}
+}));
+
+updateUnlockedUI();
+</script>
+
+</body>
+</html>
